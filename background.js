@@ -1,29 +1,35 @@
 const MAX_TABS = 100;
 var tabs = [];
-var index = -1;
+var previous_index = -1;
+var index_trace = -1;
 
 function get_previous_tab(){
-    if (index > 0){
-        index--;
+    if (index_trace > 0){
+        index_trace--;
     }
-    return tabs[index];
+    return tabs[index_trace];
 }
 
 function get_next_tab(){
-    if (index < tabs.length-1){
-        index++;
+    if (index_trace < tabs.length-1){
+        index_trace++;
     }
-    return tabs[index];
+    return tabs[index_trace];
 }
 
+
 function add_new_tab(id){
-    if (index == tabs.length-1){
-        index++;
-        tabs.push(id);
+    if (previous_index < index_trace){
     }
     else{
-        index++;
-        tabs[index] = id;
+        if(index_trace == tabs.length-1){
+            tabs.push(id);
+        }
+        else{
+            tabs[index_trace] = id;
+        }
+        index_trace += 1;
+        previous_index += 1;
     }
 }
 
@@ -35,17 +41,19 @@ chrome.tabs.onActivated.addListener(function(activeInfo) {
 
 chrome.commands.onCommand.addListener(function(command) {
     var new_id;
-    if(command == 'next_tab'){
+    previous_index = index_trace;
+    if(command == 'previous_tab'){
         console.log("next_tab");
-        new_id = get_next_tab();
-    }
-    else if (command == 'previous_tab'){
-        console.log("previous_tab");
         new_id = get_previous_tab();
     }
-    var info = {"tabs":0};
+    else if (command == 'next_tab'){
+        console.log("previous_tab");
+        new_id = get_next_tab();
+    }
     chrome.tabs.get(new_id,function(tab){
-        info["tabs"] = tab.index;
+        console.log("inside get, index: "+tab.index);
+        chrome.tabs.highlight({"tabs":tab.index}, function(){
+            index_trace -= 1;
+        });
     });
-    chrome.tabs.highlight(info, function(){});
 });
