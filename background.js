@@ -22,12 +22,12 @@ function add_new_tab(id){
     if (traceback == true){
         traceback = false;
     }
-    else{
-        if(index_trace == tabs.length-1){
+    else {
+        if (index_trace == tabs.length-1){
             tabs.push(id);
         }
-        else{
-            tabs[index_trace+1] = id;
+        else {
+            tabs[index_trace] = id;
         }
         index_trace += 1;
     }
@@ -39,17 +39,17 @@ chrome.tabs.onActivated.addListener(function(activeInfo) {
 })
 
 chrome.tabs.onRemoved.addListener(function(tabId){
-    var idx = 0;
-    do{
-        idx = tabs.indexOf(tabId);
+    var idx = tabs.indexOf(tabId);
+    while (idx != -1){
         tabs.splice(idx,1);
-    } while (idx != -1);
+        idx = tabs.indexOf(tabId);
+    }
 })
 
 chrome.commands.onCommand.addListener(function(command) {
     var new_id;
     traceback = true;
-    if(command == 'previous_tab'){
+    if (command == 'previous_tab'){
         new_id = get_previous_tab();
     }
     else if (command == 'next_tab'){
