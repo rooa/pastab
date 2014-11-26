@@ -1,0 +1,17 @@
+{
+    "name": "pastab",
+    "version": "0.1",
+    "manifest_version":2,
+
+    "description": "Remember previous tabs.",
+
+    "permissions":[
+        "tabs", "http://*/*"
+    ],
+
+
+    "background":{
+        "scripts": ["background.js"]
+    }
+
+}
