@@ -17,7 +17,6 @@ function get_next_tab(){
     return tabs[index_trace];
 }
 
-
 function add_new_tab(id){
     if (previous_index > index_trace){
         previous_index = index_trace;
