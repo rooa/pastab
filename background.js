@@ -1,6 +1,5 @@
 const MAX_TABS = 10;
 var tabs = [];
-var previous_index = -1;
 var index_trace = -1;
 var traceback = false;
 
