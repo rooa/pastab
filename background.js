@@ -41,5 +41,5 @@ chrome.commands.onCommand.addListener(function(command) {
     else if (command == 'previous_tab'){
         new_id = get_previous_tab();
     }
-    chrome.tabs.move(new_id);
+    chrome.tabs.highlight(new_id);
 });
