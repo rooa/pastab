@@ -3,6 +3,7 @@ var tabs = [];
 var index_trace = -1;
 var traceback = false;
 
+
 function get_previous_tab(){
     if (index_trace > 0){
         index_trace--;
@@ -34,11 +35,15 @@ function add_new_tab(id){
 
 chrome.tabs.onActivated.addListener(function(activeInfo) {
     add_new_tab(activeInfo.tabId);
+    console.log(tabs);
 })
 
 chrome.tabs.onRemoved.addListener(function(tabId){
-    var idx = tabs.indexOf(tabId);
-    tabs.splice(idx,1);
+    var idx = 0;
+    do{
+        idx = tabs.indexOf(tabId);
+        tabs.splice(idx,1);
+    } while (idx != -1);
 })
 
 chrome.commands.onCommand.addListener(function(command) {
