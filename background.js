@@ -1,6 +1,6 @@
 const MAX_TABS = 100;
 var tabs = [];
-var index = 0;
+var index = -1;
 
 function getLastTab(){
     index--;
@@ -13,8 +13,14 @@ function getNextTab(){
 }
 
 function addNewTab(id){
-    tabs.push(id);
-    index++;
+    if (index == tabs.length-1){
+        index++;
+        tabs.push(id);
+    }
+    else{
+        index++;
+        tabs[index] = id;
+    }
 }
 
 chrome.tabs.onActivated.addListener(function(activeInfo) {
@@ -23,3 +29,13 @@ chrome.tabs.onActivated.addListener(function(activeInfo) {
     console.log(tabs);
 });
 
+chrome.commands.onCommand.addListener(function(command) {
+    var new_id;
+    if(command == 'next_tab'){
+        new_id = getNextTab();
+    }
+    else if (command == 'previous_tab'){
+        new_id = getPreviousTab();
+    }
+    chrome.tabs.move(new_id);
+});
