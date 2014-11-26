@@ -2,7 +2,7 @@ const MAX_TABS = 100;
 var tabs = [];
 var index = -1;
 
-function get_last_tab(){
+function get_previous_tab(){
     if (index > 0){
         index--;
     }
@@ -41,5 +41,9 @@ chrome.commands.onCommand.addListener(function(command) {
     else if (command == 'previous_tab'){
         new_id = get_previous_tab();
     }
-    chrome.tabs.highlight(new_id);
+    var info = {"tabs":0};
+    chrome.tabs.get(new_id,function(tab){
+        info["tabs"] = tab.index;
+    });
+    chrome.tabs.highlight(info, function(){});
 });
