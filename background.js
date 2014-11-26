@@ -35,8 +35,12 @@ function add_new_tab(id){
 
 chrome.tabs.onActivated.addListener(function(activeInfo) {
     add_new_tab(activeInfo.tabId);
-    console.log(tabs);
-});
+})
+
+chrome.tabs.onRemoved.addListener(function(tabId){
+    var idx = tabs.indexOf(tabId);
+    tabs.splice(idx,1);
+})
 
 chrome.commands.onCommand.addListener(function(command) {
     var new_id;
@@ -50,4 +54,4 @@ chrome.commands.onCommand.addListener(function(command) {
     chrome.tabs.get(new_id,function(tab){
         chrome.tabs.highlight({"tabs":tab.index}, function(){});
     });
-});
+})
