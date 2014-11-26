@@ -35,6 +35,7 @@ function add_new_tab(id){
 
 chrome.tabs.onActivated.addListener(function(activeInfo) {
     add_new_tab(activeInfo.tabId);
+    console.log(tabs);
 });
 
 chrome.commands.onCommand.addListener(function(command) {
