@@ -41,15 +41,12 @@ chrome.commands.onCommand.addListener(function(command) {
     var new_id;
     previous_index = index_trace;
     if(command == 'previous_tab'){
-        console.log("next_tab");
         new_id = get_previous_tab();
     }
     else if (command == 'next_tab'){
-        console.log("previous_tab");
         new_id = get_next_tab();
     }
     chrome.tabs.get(new_id,function(tab){
-        console.log("inside get, index: "+tab.index);
         chrome.tabs.highlight({"tabs":tab.index}, function(){});
     });
 });
