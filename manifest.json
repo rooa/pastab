@@ -12,6 +12,20 @@
 
     "background":{
         "scripts": ["background.js"]
-    }
+    },
 
+    "commands":{
+        "next_tab":{
+            "description": "Move to newer tabs",
+            "suggested_key": {
+                "default": "Alt+F"
+            }
+        },
+        "previous_tab":{
+            "description": "Move to older tabs",
+            "suggested_key": {
+                "default": "Alt+B"
+            }
+        }
+    }
 }
