@@ -36,9 +36,11 @@ chrome.tabs.onActivated.addListener(function(activeInfo) {
 chrome.commands.onCommand.addListener(function(command) {
     var new_id;
     if(command == 'next_tab'){
+        console.log("next_tab");
         new_id = get_next_tab();
     }
     else if (command == 'previous_tab'){
+        console.log("previous_tab");
         new_id = get_previous_tab();
     }
     var info = {"tabs":0};
