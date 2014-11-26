@@ -19,14 +19,15 @@ function get_next_tab(){
 
 
 function add_new_tab(id){
-    if (previous_index < index_trace){
+    if (previous_index > index_trace){
+        previous_index = index_trace;
     }
     else{
         if(index_trace == tabs.length-1){
             tabs.push(id);
         }
         else{
-            tabs[index_trace] = id;
+            tabs[index_trace+1] = id;
         }
         index_trace += 1;
         previous_index += 1;
@@ -34,9 +35,7 @@ function add_new_tab(id){
 }
 
 chrome.tabs.onActivated.addListener(function(activeInfo) {
-    //console.log("ID: "+activeInfo.tabId);
     add_new_tab(activeInfo.tabId);
-    console.log(tabs);
 });
 
 chrome.commands.onCommand.addListener(function(command) {
@@ -52,8 +51,6 @@ chrome.commands.onCommand.addListener(function(command) {
     }
     chrome.tabs.get(new_id,function(tab){
         console.log("inside get, index: "+tab.index);
-        chrome.tabs.highlight({"tabs":tab.index}, function(){
-            index_trace -= 1;
-        });
+        chrome.tabs.highlight({"tabs":tab.index}, function(){});
     });
 });
