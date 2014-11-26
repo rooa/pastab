@@ -2,6 +2,7 @@ const MAX_TABS = 10;
 var tabs = [];
 var previous_index = -1;
 var index_trace = -1;
+var traceback = false;
 
 function get_previous_tab(){
     if (index_trace > 0){
@@ -18,8 +19,8 @@ function get_next_tab(){
 }
 
 function add_new_tab(id){
-    if (previous_index > index_trace){
-        previous_index = index_trace;
+    if (traceback == true){
+        traceback = false;
     }
     else{
         if(index_trace == tabs.length-1){
@@ -29,7 +30,6 @@ function add_new_tab(id){
             tabs[index_trace+1] = id;
         }
         index_trace += 1;
-        previous_index += 1;
     }
 }
 
@@ -40,7 +40,7 @@ chrome.tabs.onActivated.addListener(function(activeInfo) {
 
 chrome.commands.onCommand.addListener(function(command) {
     var new_id;
-    previous_index = index_trace;
+    traceback = true;
     if(command == 'previous_tab'){
         new_id = get_previous_tab();
     }
