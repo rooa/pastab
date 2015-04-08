@@ -44,6 +44,7 @@ chrome.tabs.onRemoved.addListener(function(tabId){
         tabs.splice(idx,1);
         idx = tabs.indexOf(tabId);
     }
+    traceback = true;
 })
 
 chrome.commands.onCommand.addListener(function(command) {
